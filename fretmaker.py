@@ -1,7 +1,10 @@
+#Problems - app gets very very laggy after many notes made (because of variables?)
+#How to delete these variables
+
+
 from tkinter import *
 import keyindex as ki
 from functions import *
-from functools import partial
 
 #This contains default mappings fret markers
 mappings = ['0','1','2','3','4','5']
@@ -20,25 +23,30 @@ root.config(menu = main_menu)
 
 key_menu = Menu(main_menu)
 key_menu.add_radiobutton(label = "C", variable = key, value = 'C')
+key_menu.add_radiobutton(label = "C#", variable = key, value = 'C#')
 key_menu.add_radiobutton(label = "D", variable = key, value = 'D')
+key_menu.add_radiobutton(label = "D#", variable = key, value = 'D#')
 key_menu.add_radiobutton(label = "E", variable = key, value = 'E')
 key_menu.add_radiobutton(label = "F", variable = key, value = 'F')
+key_menu.add_radiobutton(label = "F#", variable = key, value = 'F#')
 key_menu.add_radiobutton(label = "G", variable = key, value = 'G')
+key_menu.add_radiobutton(label = "G#", variable = key, value = 'G#')
 key_menu.add_radiobutton(label = "A", variable = key, value = 'A')
+key_menu.add_radiobutton(label = "A#", variable = key, value = 'A#')
 key_menu.add_radiobutton(label = "B", variable = key, value = 'B')
 main_menu.add_cascade(label = "Key", menu = key_menu)
 
 scale_menu = Menu(main_menu)
 scale_menu.add_radiobutton(label = 'Major Pentatonic', variable = scale,
-                           value = 'major_pentatonic')
+                           value = 'maj_pent')
 scale_menu.add_radiobutton(label = 'Minor Pentatonic', variable = scale,
-                           value = 'minor_pentatonic')
+                           value = 'min_pent')
 scale_menu.add_radiobutton(label = 'Major', variable = scale,
-                           value = 'major')
+                           value = 'maj')
 scale_menu.add_radiobutton(label = 'Natural Minor', variable = scale,
-                           value = 'natural_minor')
+                           value = 'nat_min')
 scale_menu.add_radiobutton(label = 'Melodic Minor', variable = scale,
-                           value = 'melodic_minor')
+                           value = 'mel_min')
 main_menu.add_cascade(label = "Scale", menu = scale_menu)
 
 position_menu = Menu(main_menu)
@@ -110,7 +118,7 @@ def next_note():
         tkinter.messagebox.showinfo('Error',
         'Choose a key, scale and position.')
     else:
-        make_note(curr_key, curr_scale, curr_pos, fretboard_canvas)
+        make_note(curr_key, curr_scale, curr_pos, fretboard_canvas, bottomframe)
 
 #The button bound to the make_note function
 next_button = Button(topframe,

@@ -34,7 +34,7 @@ finger_positions = {
     }
 
 #dictionaries with scale positions
-minor_pentatonic_positions = {
+min_pent_positions = {
     '1': ['A0','A3','B0','B3','C0','C2','D0','D2','E0','E2','F0','F3'],
     '2': ['A1', 'A3','B1','B3','C0','C2','D0','D3','E0','E3','F1','F3'],
     '3': ['A1','A3','B1','B4','C0','C3','D1','D3','E1','E3','F1','F3'],
@@ -44,11 +44,18 @@ minor_pentatonic_positions = {
 
 #dictionary of fret marker mappings
 def make_list(x):
+    if x >= 12:
+        x = (x-12)
     list = []
-    for value in range(5):
+    for value in range(6):
         list.append(str(x + value))
     return list
 
-fret_marker_mappings = {
-    'A_minor_pentatonic_1': ['5','6','7','8','9'],
-}
+fret_marker_mappings = {}
+list = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#']
+for note in list:
+    fret_marker_mappings[note + "_min_pent_1"] = make_list(list.index(note) + 4)
+    fret_marker_mappings[note + "_min_pent_2"] = make_list(list.index(note) + 6)
+    fret_marker_mappings[note + "_min_pent_3"] = make_list(list.index(note) + 8)
+    fret_marker_mappings[note + "_min_pent_4"] = make_list(list.index(note) + 11)
+    fret_marker_mappings[note + "_min_pent_5"] = make_list(list.index(note) + 13)
