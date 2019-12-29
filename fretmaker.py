@@ -1,7 +1,6 @@
 #Problems - app gets very very laggy after many notes made (because of variables?)
 #How to delete these variables
 
-
 from tkinter import *
 import keyindex as ki
 from functions import *
@@ -15,7 +14,6 @@ root.title("Fretmaker")
 key = StringVar()
 scale = StringVar()
 position = StringVar()
-
 
 #Drop down menus
 main_menu = Menu(root)

@@ -1,5 +1,7 @@
 from keyindex import *
+from audioindex import *
 from tkinter import *
+from playsound import playsound
 import tkinter.messagebox
 import random
 
@@ -8,12 +10,19 @@ def delete_note(fretboard_canvas):
 
 def make_note_list(scale, position):
     ###Generate a list of notes from the given scale, position###
-    if scale == 'min_pent' or scale == "maj_pent":
+    if scale == 'min_pent':
         if position in ('6','7'):
             tkinter.messagebox.showinfo('Error',
             'The pentatonic scale only has 5 positions!')
         else:
             return min_pent_positions[position]
+    if scale == 'maj_pent':
+        if position in ('6','7'):
+            tkinter.messagebox.showinfo('Error',
+            'The pentatonic scale only has 5 positions!')
+        else:
+            return maj_pent_positions[position]
+
 
 def choose_note(note_list):
     ###Generates a random note from the note list.###
