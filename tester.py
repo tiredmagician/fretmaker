@@ -1,3 +1,5 @@
+# To do - Adjust position of numbers in fretboard view mode.
+
 from tkinter import *
 import keyindex as ki
 from functions import *
