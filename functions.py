@@ -80,4 +80,4 @@ def make_audio_list(key, scale, position):
 def get_audio(key, scale, position):
     audio_list = make_audio_list(key, scale, position)
     note = choose_note(audio_list)
-    playsound(audio_dictionary[note])
+    playsound("audio\\" + note + ".wav")
