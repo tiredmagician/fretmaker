@@ -1,4 +1,6 @@
 # To do - Adjust position of numbers in fretboard view mode.
+# Rerecord the audio files so they're a shorter length.
+# scales for other scales.
 
 from tkinter import *
 import keyindex as ki
