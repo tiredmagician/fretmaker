@@ -16,7 +16,7 @@ def make_note_list(scale, position):
             'The pentatonic scale only has 5 positions!')
         else:
             return min_pent_positions[position]
-    if scale == 'maj_pent':
+    elif scale == 'maj_pent':
         if position in ('6','7'):
             tkinter.messagebox.showinfo('Error',
             'The pentatonic scale only has 5 positions!')
@@ -62,3 +62,22 @@ def make_note(key, scale, position, fretboard_canvas, bottomframe):
     note = choose_note(note_list)
     print_note(note, fretboard_canvas)
     change_fret_markers(key, scale, position, bottomframe)
+
+def make_audio_list(key, scale, position):
+    if scale == 'min_pent':
+        if position in ('6','7'):
+            tkinter.messagebox.showinfo('Error',
+            'The pentatonic scale only has 5 positions!')
+        else:
+            return min_pent_audio_positions[(key+position)]
+    elif scale == 'maj_pent':
+        if position in ('6','7'):
+            tkinter.messagebox.showinfo('Error',
+            'The pentatonic scale only has 5 positions!')
+        else:
+            return maj_pent_audio_positions[(key+position)]
+
+def get_audio(key, scale, position):
+    audio_list = make_audio_list(key, scale, position)
+    note = choose_note(audio_list)
+    playsound(audio_dictionary[note])

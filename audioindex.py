@@ -140,3 +140,7 @@ audio_dictionary = {
     "e21": "audio\C#3.wav",
     "e22": "audio\D3.wav",
 }
+
+min_pent_audio_positions = {
+    "A1": ["E3","E5","A3","A5","D2","D5","G2","G5","B3","B5","e3","e5"]
+}

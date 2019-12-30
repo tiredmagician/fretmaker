@@ -92,6 +92,8 @@ class StartPage(Frame):
 
         audiobutton = Button(self, text = "Audio mode", command = lambda: controller.show_frame(AudioPage))
 
+        audiobutton.pack()
+
 class FretPage(Frame):
 
     def __init__(self, parent, controller, key, scale, position):
@@ -181,6 +183,12 @@ class AudioPage(Frame):
          self.key = key
          self.scale = scale
          self.position = position
+
+         topframe = Frame(self,parent)
+         topframe.pack()
+
+         bottomframe = Frame(self,parent)
+         bottomframe.pack(side = BOTTOM)
 
          #Function to be called when play note button is pressed
          def play_note():
