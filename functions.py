@@ -3,6 +3,7 @@ from audioindex import *
 from noteindex import *
 from tkinter import *
 from playsound import playsound
+from sys import platform
 import tkinter.messagebox
 import random
 
@@ -80,7 +81,10 @@ def make_audio_list(key, scale, position):
 def make_audio(key, scale, position):
     audio_list = make_audio_list(key, scale, position)
     audio = choose_fret(audio_list)
-    playsound("audio\\" + audio + ".wav")
+    if platform == "darwin":
+        playsound("audio//" + audio + ".wav")
+    elif platform == "win32":
+        playsound("audio\\" + audio + ".wav")
 
 def make_note_list(key, scale, position):
     if scale == 'min_pent':
