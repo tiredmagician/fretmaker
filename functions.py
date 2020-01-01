@@ -1,14 +1,15 @@
-from keyindex import *
+from fretindex import *
 from audioindex import *
+from noteindex import *
 from tkinter import *
 from playsound import playsound
 import tkinter.messagebox
 import random
 
-def delete_note(fretboard_canvas):
-    fretboard_canvas.delete('note')
+def delete_fret(fretboard_canvas):
+    fretboard_canvas.delete('fret')
 
-def make_note_list(scale, position):
+def make_fret_list(scale, position):
     ###Generate a list of notes from the given scale, position###
     if scale == 'min_pent':
         if position in ('6','7'):
@@ -23,18 +24,17 @@ def make_note_list(scale, position):
         else:
             return maj_pent_positions[position]
 
+def choose_fret(fret_list):
+    ###Generates a random fret from the fret list.###
+    return random.choice(fret_list)
 
-def choose_note(note_list):
-    ###Generates a random note from the note list.###
-    return random.choice(note_list)
-
-def print_note(note, fretboard_canvas):
+def print_fret(fret, fretboard_canvas):
     ###prints the note into the fretboard canvas###
     fretboard_canvas.create_oval(
-        finger_positions[note],
+        finger_positions[fret],
         fill = 'red',
         outline = '',
-        tags = 'note',
+        tags = 'fret',
         )
 
 def change_fret_markers(key, scale, position, bottomframe):
@@ -55,12 +55,12 @@ def change_fret_markers(key, scale, position, bottomframe):
     xlabel4.grid(row = 6, column = 5)
     xlabel5.grid(row = 6, column = 6)
 
-def make_note(key, scale, position, fretboard_canvas, bottomframe):
+def make_fret(key, scale, position, fretboard_canvas, bottomframe):
     ###Makes new note###
-    delete_note(fretboard_canvas)
-    note_list = make_note_list(scale, position)
-    note = choose_note(note_list)
-    print_note(note, fretboard_canvas)
+    delete_fret(fretboard_canvas)
+    fret_list = make_fret_list(scale, position)
+    fret = choose_fret(fret_list)
+    print_fret(fret, fretboard_canvas)
     change_fret_markers(key, scale, position, bottomframe)
 
 def make_audio_list(key, scale, position):
@@ -77,7 +77,26 @@ def make_audio_list(key, scale, position):
         else:
             return maj_pent_audio_positions[(key+position)]
 
-def get_audio(key, scale, position):
+def make_audio(key, scale, position):
     audio_list = make_audio_list(key, scale, position)
-    note = choose_note(audio_list)
-    playsound("audio\\" + note + ".wav")
+    audio = choose_fret(audio_list)
+    playsound("audio\\" + audio + ".wav")
+
+def make_note_list(key, scale, position):
+    if scale == 'min_pent':
+        if position in ('6','7'):
+            tkinter.messagebox.showinfo('Error',
+            'The pentatonic scale only has 5 positions!')
+        else:
+            return min_pent_note_dictionary[position]
+    elif scale == 'maj_pent':
+        if position in ('6','7'):
+            tkinter.messagebox.showinfo('Error',
+            'The pentatonic scale only has 5 positions!')
+        else:
+            return maj_pent_note_dictionary[position]
+
+def make_note(key, scale, position, display):
+    note_list = make_note_list(key, scale, position)
+    note = choose_fret(note_list)
+    display.config(text = note)

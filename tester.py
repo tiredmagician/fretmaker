@@ -3,7 +3,6 @@
 # scales for other scales.
 
 from tkinter import *
-import keyindex as ki
 from functions import *
 
 #This contains default mappings fret markers
@@ -47,10 +46,10 @@ class Fretmaker(Tk):
         main_menu.add_cascade(label = "Key", menu = key_menu)
 
         scale_menu = Menu(main_menu)
-        scale_menu.add_radiobutton(label = 'Major Pentatonic', variable = scale,
-                                   value = 'maj_pent')
         scale_menu.add_radiobutton(label = 'Minor Pentatonic', variable = scale,
                                    value = 'min_pent')
+        scale_menu.add_radiobutton(label = 'Major Pentatonic', variable = scale,
+                                   value = 'maj_pent')
         scale_menu.add_radiobutton(label = 'Major', variable = scale,
                                    value = 'maj')
         scale_menu.add_radiobutton(label = 'Natural Minor', variable = scale,
@@ -71,7 +70,7 @@ class Fretmaker(Tk):
 
         self.frames = {}
 
-        for F in (StartPage, FretPage, AudioPage):
+        for F in (StartPage, NotePage, FretPage, AudioPage):
 
             frame = F(container, self, key, scale, position)
             self.frames[F] = frame
@@ -80,7 +79,6 @@ class Fretmaker(Tk):
         self.show_frame(StartPage)
 
     def show_frame(self, cont):
-
         frame = self.frames[cont]
         frame.tkraise()
 
@@ -90,6 +88,10 @@ class StartPage(Frame):
         label = Label(self, text = "This is the start page", font = LARGE_FONT)
         label.pack(pady = 10, padx = 10)
 
+        notebutton = Button(self, text = "Note mode", command = lambda: controller.show_frame(NotePage))
+
+        notebutton.pack()
+
         fretbutton = Button(self, text = "Fretboard mode", command = lambda: controller.show_frame(FretPage))
 
         fretbutton.pack()
@@ -97,6 +99,52 @@ class StartPage(Frame):
         audiobutton = Button(self, text = "Audio mode", command = lambda: controller.show_frame(AudioPage))
 
         audiobutton.pack()
+
+class NotePage(Frame):
+
+     def __init__(self, parent, controller, key, scale, position):
+         Frame.__init__(self, parent)
+         self.key = key
+         self.scale = scale
+         self.position = position
+
+         topframe = Frame(self,parent)
+         topframe.pack()
+
+         bottomframe = Frame(self,parent)
+         bottomframe.pack(side = BOTTOM)
+
+         display = Label(bottomframe, text = '')
+         display.pack()
+
+         #Function to be called when play note button is pressed
+         def next_note():
+             curr_key = key.get()
+             curr_scale = scale.get()
+             curr_pos = position.get()
+             if curr_key == '' or curr_scale == '' or curr_pos == '':
+                 tkinter.messagebox.showinfo('Error',
+                 'Choose a key, scale and position.')
+             else:
+                 make_note(curr_key, curr_scale, curr_pos, display)
+
+
+         #The button bound to the make_note function
+         play_button = Button(topframe,
+             text = "Play Note",
+             fg = 'black',
+             command = next_note)
+
+         play_button.pack(side = LEFT)
+
+         #Home button
+         home_button = Button(topframe,
+             text = "Back to Home",
+             command=lambda: controller.show_frame(StartPage))
+
+         home_button.pack()
+
+
 
 class FretPage(Frame):
 
@@ -156,7 +204,7 @@ class FretPage(Frame):
         fretboard_canvas.create_line(342, 15, 342, 190)
 
         #Function to be called when the next note button is pressed
-        def next_note():
+        def next_fret():
             curr_key = key.get()
             curr_scale = scale.get()
             curr_pos = position.get()
@@ -164,13 +212,13 @@ class FretPage(Frame):
                 tkinter.messagebox.showinfo('Error',
                 'Choose a key, scale and position.')
             else:
-                make_note(curr_key, curr_scale, curr_pos, fretboard_canvas, bottomframe)
+                make_fret(curr_key, curr_scale, curr_pos, fretboard_canvas, bottomframe)
 
         #The button bound to the make_note function
         next_button = Button(topframe,
             text = "Next Note",
             fg = 'black',
-            command = next_note)
+            command = next_fret)
 
         next_button.pack(side = LEFT)
 
@@ -195,7 +243,7 @@ class AudioPage(Frame):
          bottomframe.pack(side = BOTTOM)
 
          #Function to be called when play note button is pressed
-         def play_note():
+         def next_audio():
              curr_key = key.get()
              curr_scale = scale.get()
              curr_pos = position.get()
@@ -203,13 +251,13 @@ class AudioPage(Frame):
                  tkinter.messagebox.showinfo('Error',
                  'Choose a key, scale and position.')
              else:
-                 get_audio(curr_key, curr_scale, curr_pos)
+                 make_audio(curr_key, curr_scale, curr_pos)
 
          #The button bound to the make_note function
          play_button = Button(topframe,
              text = "Play Note",
              fg = 'black',
-             command = play_note)
+             command = next_audio)
 
          play_button.pack(side = LEFT)
 
